@@ -24,7 +24,7 @@ class ImportData:
 
     def import_columns_without_class(self) -> numpy.ndarray:
         columns_names = self.import_names_of_columns()
-        result = numpy.take(columns_names, range(0, 10))
+        result = numpy.take(columns_names, range(0, 2))
 
         return result
 
@@ -39,6 +39,6 @@ class ImportData:
 
         columns_names = self.import_names_of_columns()
         usecols = self.import_columns_without_class()
-
         data = pd.read_csv(self.dataset_path, sep=',', index_col=0, names=columns_names, usecols=usecols)
+
         return data.values
