@@ -4,8 +4,8 @@ import numpy
 
 class ImportData:
     def __init__(self,
-                 dataset_path='../dataset1/skin-segmentation.csv',
-                 columns_path='../dataset1/skin-segmentation.names'):
+                 dataset_path='./dataset3/pokerhand.csv',
+                 columns_path='./dataset3/pokerhand.names'):
         self.dataset_path = dataset_path
         self.columns_path = columns_path
 
@@ -14,7 +14,14 @@ class ImportData:
 
         return numpy.concatenate(columns, axis=0)
 
-    def import_columns(self, selected_columns_names: numpy.ndarray)-> numpy.ndarray:
+    def import_columns(self, path, selected_columns_names: numpy.ndarray) -> numpy.ndarray:
+        columns_names = self.import_names_of_columns()
+
+        data = pd.read_csv(path, sep=',', names=columns_names, usecols=selected_columns_names)
+
+        return data.values
+
+    def import_classes(self, selected_columns_names: numpy.ndarray)-> numpy.ndarray:
 
         columns_names = self.import_names_of_columns()
 
@@ -22,9 +29,16 @@ class ImportData:
 
         return data.values
 
+    def import_classes_for_reduced_datasets(self, path, selected_columns_names: numpy.ndarray) -> numpy.ndarray:
+        columns_names = self.import_names_of_columns()
+
+        data = pd.read_csv(path, sep=',', names=columns_names, usecols=selected_columns_names)
+
+        return data.values
+
     def import_columns_without_class(self) -> numpy.ndarray:
         columns_names = self.import_names_of_columns()
-        result = numpy.take(columns_names, range(0, 2))
+        result = numpy.take(columns_names, range(-1, 9))
 
         return result
 
